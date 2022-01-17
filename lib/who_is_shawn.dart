@@ -8,6 +8,7 @@ import 'package:who_is_shawn/screens/main_screen.dart';
 
 class WhoIsShawn extends StatelessWidget {
   const WhoIsShawn({Key? key}) : super(key: key);
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,9 @@ class WhoIsShawn extends StatelessWidget {
       title: 'Who is Shawn??',
       theme: ThemeData(
         primarySwatch: Colors.blue,
+        fontFamily: 'Gothic_A1'
       ),
+      navigatorKey: navigatorKey,
       home: const MainScreen(),
     );
   }

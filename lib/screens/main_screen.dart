@@ -20,22 +20,55 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
 
+  ScrollController scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // scrollController.addListener(() {
+    //   final devidedValue = scrollController.offset / MediaQuery.of(context).size.height;
+
+    //   if (devidedValue <= 0.8){
+    //     context.read<PageProvider>().setCurrentIndex(0);
+    //   // } else if(0.8 < scrollController.offset / mediaHeight ){
+    //   } else if(0.8 < devidedValue && devidedValue <1.8){
+    //     context.read<PageProvider>().setCurrentIndex(1);
+    //   // } else if(scrollController.offset / mediaHeight == 2){
+    //   } else if(1.8 <= devidedValue && devidedValue <2.8){
+    //     Provider.of<PageProvider>(context,listen: false).setCurrentIndex(2);
+    //   } else if(2.8 <=devidedValue){
+    //     Provider.of<PageProvider>(context,listen: false).setCurrentIndex(3);
+    //   }
+
+    //  });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    Provider.of<PageProvider>(context,listen: false).addListener(() {
+      print('asbsdsdsd');
+      scrollController.animateTo(
+        MediaQuery.of(context).size.height * Provider.of<PageProvider>(context,listen: false).currentIndex, 
+        duration: const Duration(milliseconds: 1000), 
+        curve: Curves.easeIn
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    // print('width : ${MediaQuery.of(context).size}, ');
     
     return Scaffold(
-      // backgroundColor: AppColors.lightCyan,
+
       body: LayoutBuilder(
         builder: (context, constraints){
-          print(constraints.biggest);
-          print(MediaQuery.of(context).size);
           return Stack(
 
             children: <Widget>[
-              
               ListView.builder(
+                controller: scrollController,
                 itemCount: 4,
                 itemBuilder: (context, index){
                   return Container(
@@ -45,41 +78,21 @@ class _MainScreenState extends State<MainScreen> {
                   );
                 }
               ),
-              WisAppBar(),
+
+              const WisAppBar(),
             ],
           );
         },
       )
     );
   }
-}
 
-
-class MainScreenBackgroundDecoration extends Decoration{
-  
-  @override
-  BoxPainter createBoxPainter([VoidCallback? onChanged]) {
-    // TODO: implement createBoxPainter
-    return MainScreenBackgroundDecorationPaint();
-  }
-
-  
-}
-
-class MainScreenBackgroundDecorationPaint extends BoxPainter{
 
   @override
-  void paint(Canvas canvas, Offset offset, ImageConfiguration configuration) {
-    // TODO: implement paint
-    print('Paint : ${configuration.size}');
-    
-    var paint = Paint();
-    paint.strokeWidth = 10;
-    paint.color = Colors.red;
-    paint.maskFilter = ui.MaskFilter.blur(BlurStyle.normal, 50);
-
-    canvas.drawCircle(Offset(100,100), 100, paint);
-
+  void dispose() {
+    super.dispose();
+    scrollController.dispose();
   }
-
 }
+
+
