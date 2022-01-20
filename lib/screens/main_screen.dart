@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:who_is_shawn/design_foundation/app_colors.dart';
 import 'package:who_is_shawn/providers/page_provider.dart';
+import 'package:who_is_shawn/screens/experience_screen.dart';
 import 'package:who_is_shawn/screens/introduce_screen.dart';
 import 'package:who_is_shawn/widgets/wis_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,16 @@ class _MainScreenState extends State<MainScreen> {
   ScrollController scrollController = ScrollController();
   int lastTrailingIndex = 0;
 
+  int offsetWantToGo = 0;
+
+  List<Widget> screens = [
+    const IntroduceScreen(),
+    const ExperienceScreen(),
+    const IntroduceScreen(),
+    const ExperienceScreen()
+  ];
+
+
   @override
   void initState() {
     super.initState();
@@ -33,19 +44,22 @@ class _MainScreenState extends State<MainScreen> {
 
   void synchronizeScrollWithIndex(){
     int devidedValue = scrollController.offset ~/ MediaQuery.of(context).size.height;
+    int currentIndex = context.read<PageProvider>().currentIndex;
 
     if(devidedValue != lastTrailingIndex){
 
       if (devidedValue == 0.0){
-      context.read<PageProvider>().setCurrentIndex(0);
+        if(devidedValue == currentIndex) context.read<PageProvider>().setCurrentIndex(0);
+        if(lastTrailingIndex == currentIndex) context.read<PageProvider>().setCurrentIndex(0);
       } else if(devidedValue ==1.0){
-        context.read<PageProvider>().setCurrentIndex(1);
+        if(devidedValue == currentIndex) context.read<PageProvider>().setCurrentIndex(1);
+        if(lastTrailingIndex == currentIndex) context.read<PageProvider>().setCurrentIndex(1);
       } else if(devidedValue ==2.0){
-        // Provider.of<PageProvider>(context,listen: false).setCurrentIndex(2);
-        context.read<PageProvider>().setCurrentIndex(2);
+        if(devidedValue == currentIndex) context.read<PageProvider>().setCurrentIndex(2);
+        if(lastTrailingIndex == currentIndex) context.read<PageProvider>().setCurrentIndex(2);
       } else if(devidedValue ==3.0){
-        // Provider.of<PageProvider>(context,listen: false).setCurrentIndex(3);
-        context.read<PageProvider>().setCurrentIndex(3);
+        if(devidedValue == currentIndex) context.read<PageProvider>().setCurrentIndex(3);
+        if(lastTrailingIndex == currentIndex) context.read<PageProvider>().setCurrentIndex(3);
       }
 
       lastTrailingIndex = devidedValue;
@@ -74,21 +88,102 @@ class _MainScreenState extends State<MainScreen> {
           return Stack(
 
             children: <Widget>[
+
+
+              // ListView.builder(
+              //   // shrinkWrap: true,
+              //   controller: scrollController,
+              //   itemCount: 4,
+              //   itemBuilder: (context, index){
+              //     if(index ==0){
+              //       print('index == 0');
+              //       return const IntroduceScreen();
+              //     }
+              //     return Container(
+              //       height: constraints.biggest.height,
+              //       // color: Colors.blue[100*index],
+              //       color: Colors.transparent,
+              //       child: Text(context.watch<PageProvider>().currentIndex.toString()),
+              //       // child: Text('sdfsdfsd'),
+              //     );
+              //   }
+              // ),
               ListView.builder(
-                  controller: scrollController,
-                  itemCount: 4,
-                  itemBuilder: (context, index){
-                    if(index ==0){
-                      return IntroduceScreen();
-                    }
-                    return Container(
-                      height: constraints.biggest.height,
-                      color: Colors.blue[100*index],
-                      child: Text(context.watch<PageProvider>().currentIndex.toString()),
-                      // child: Text('sdfsdfsd'),
-                    );
-                  }
-                ),
+                controller: scrollController,
+                itemCount: screens.length,
+                itemBuilder:(context, index){
+                  return screens[index];
+                }
+              ),
+
+              // ListView(
+              //   children: <Widget>[
+              //     const IntroduceScreen(),
+              //     const ExperienceScreen(),
+
+              //       Container(
+              //         width: constraints.biggest.width,
+              //         height: constraints.biggest.height,
+              //         // color: Colors.blue[200],
+              //         color: Colors.transparent,
+              //         child: Text(context.watch<PageProvider>().currentIndex.toString()),
+              //         // child: Text('sdfsdfsd'),
+              //       ),
+              //       Container(
+              //         width: constraints.biggest.width,
+              //         height: constraints.biggest.height,
+              //         color: Colors.blue[300],
+              //         child: Text(context.watch<PageProvider>().currentIndex.toString()),
+              //         // child: Text('sdfsdfsd'),
+              //       ),
+              //   ],
+              // ),
+
+
+              // SingleChildScrollView(
+              //   controller: scrollController,
+              //   child: Column(
+              //     children: List.generate(4, (index){
+              //       if(index ==0){
+              //         return const IntroduceScreen();
+              //       }
+              //       return Container(
+              //         width: constraints.biggest.width,
+              //         height: constraints.biggest.height,
+              //         color: Colors.transparent,
+              //         child: Text(context.watch<PageProvider>().currentIndex.toString()),
+              //         // child: Text('sdfsdfsd'),
+              //       );
+              //     }),
+              //   ),
+              // ),
+
+              // SingleChildScrollView(
+              //   controller: scrollController,
+              //   child: Column(
+              //     children: [
+              //       const IntroduceScreen(),
+              //       Container(
+              //         width: constraints.biggest.width,
+              //         height: constraints.biggest.height,
+              //         color: Colors.blue[100],
+              //         child: Text(context.watch<PageProvider>().currentIndex.toString()),
+              //         // child: Text('sdfsdfsd'),
+              //       ),
+              //       const ExperienceScreen(),
+              //       Container(
+              //         width: constraints.biggest.width,
+              //         height: constraints.biggest.height,
+              //         // color: Colors.blue[200],
+              //         color: Colors.transparent,
+              //         child: Text(context.watch<PageProvider>().currentIndex.toString()),
+              //         // child: Text('sdfsdfsd'),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+
+             
 
               const WisAppBar(),
               
@@ -105,4 +200,5 @@ class _MainScreenState extends State<MainScreen> {
     super.dispose();
     scrollController.dispose();
   }
+  
 }
