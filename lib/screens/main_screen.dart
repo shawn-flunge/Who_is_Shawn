@@ -7,6 +7,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:who_is_shawn/design_foundation/app_colors.dart';
 import 'package:who_is_shawn/providers/page_provider.dart';
+import 'package:who_is_shawn/screens/introduce_screen.dart';
 import 'package:who_is_shawn/widgets/wis_app_bar.dart';
 import 'package:provider/provider.dart';
 
@@ -21,37 +22,43 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
 
   ScrollController scrollController = ScrollController();
+  int lastTrailingIndex = 0;
 
   @override
   void initState() {
     super.initState();
 
-    // scrollController.addListener(() {
-    //   final devidedValue = scrollController.offset / MediaQuery.of(context).size.height;
+    scrollController.addListener(synchronizeScrollWithIndex);
+  }
 
-    //   if (devidedValue <= 0.8){
-    //     context.read<PageProvider>().setCurrentIndex(0);
-    //   // } else if(0.8 < scrollController.offset / mediaHeight ){
-    //   } else if(0.8 < devidedValue && devidedValue <1.8){
-    //     context.read<PageProvider>().setCurrentIndex(1);
-    //   // } else if(scrollController.offset / mediaHeight == 2){
-    //   } else if(1.8 <= devidedValue && devidedValue <2.8){
-    //     Provider.of<PageProvider>(context,listen: false).setCurrentIndex(2);
-    //   } else if(2.8 <=devidedValue){
-    //     Provider.of<PageProvider>(context,listen: false).setCurrentIndex(3);
-    //   }
+  void synchronizeScrollWithIndex(){
+    int devidedValue = scrollController.offset ~/ MediaQuery.of(context).size.height;
 
-    //  });
+    if(devidedValue != lastTrailingIndex){
+
+      if (devidedValue == 0.0){
+      context.read<PageProvider>().setCurrentIndex(0);
+      } else if(devidedValue ==1.0){
+        context.read<PageProvider>().setCurrentIndex(1);
+      } else if(devidedValue ==2.0){
+        // Provider.of<PageProvider>(context,listen: false).setCurrentIndex(2);
+        context.read<PageProvider>().setCurrentIndex(2);
+      } else if(devidedValue ==3.0){
+        // Provider.of<PageProvider>(context,listen: false).setCurrentIndex(3);
+        context.read<PageProvider>().setCurrentIndex(3);
+      }
+
+      lastTrailingIndex = devidedValue;
+    }
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     Provider.of<PageProvider>(context,listen: false).addListener(() {
-      print('asbsdsdsd');
       scrollController.animateTo(
         MediaQuery.of(context).size.height * Provider.of<PageProvider>(context,listen: false).currentIndex, 
-        duration: const Duration(milliseconds: 1000), 
+        duration: const Duration(milliseconds: 500), 
         curve: Curves.easeIn
       );
     });
@@ -59,27 +66,32 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
 
+    return Scaffold(
+      
       body: LayoutBuilder(
         builder: (context, constraints){
           return Stack(
 
             children: <Widget>[
               ListView.builder(
-                controller: scrollController,
-                itemCount: 4,
-                itemBuilder: (context, index){
-                  return Container(
-                    height: constraints.biggest.height,
-                    color: Colors.blue[100*index],
-                    child: Text(context.watch<PageProvider>().currentIndex.toString()),
-                  );
-                }
-              ),
+                  controller: scrollController,
+                  itemCount: 4,
+                  itemBuilder: (context, index){
+                    if(index ==0){
+                      return IntroduceScreen();
+                    }
+                    return Container(
+                      height: constraints.biggest.height,
+                      color: Colors.blue[100*index],
+                      child: Text(context.watch<PageProvider>().currentIndex.toString()),
+                      // child: Text('sdfsdfsd'),
+                    );
+                  }
+                ),
 
               const WisAppBar(),
+              
             ],
           );
         },
@@ -94,5 +106,3 @@ class _MainScreenState extends State<MainScreen> {
     scrollController.dispose();
   }
 }
-
-
