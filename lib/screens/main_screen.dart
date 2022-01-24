@@ -28,8 +28,9 @@ class _MainScreenState extends State<MainScreen> {
   int offsetWantToGo = 0;
 
   List<Widget> screens = [
-    const IntroduceScreen(),
     const ExperienceScreen(),
+    const IntroduceScreen(),
+    
     const IntroduceScreen(),
     const ExperienceScreen()
   ];

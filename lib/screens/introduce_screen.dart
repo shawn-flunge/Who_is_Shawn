@@ -17,21 +17,15 @@ class IntroduceScreen extends StatefulWidget {
 
 class _IntroduceScreenState extends State<IntroduceScreen> {
 
-  
-
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // print('sdfsdf ${size.height}');
-    // print('sdfsdf ${MediaQuery.of(context).view}');
     return LayoutBuilder(
       builder: (context, constraints){
         
         return Container(
           decoration: IntroduceScreenBackgroundDecoration(),
-          // foregroundDecoration: IntroduceScreenBackgroundDecoration(),
-          // color: Colors.red,
           width: size.width,
           height: size.height,
 

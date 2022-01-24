@@ -18,16 +18,126 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
     return Container(
       width: size.width,
       height: size.height,
-      decoration: IntroduceScreenBackgroundDecoration2(),
-      child: Center(
-        child: Container(
-          width: 400,
-          height: 100,color: Colors.red,
-        ),
+      color: AppColors.yellowMintCream,
+      // decoration: IntroduceScreenBackgroundDecoration2(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          // Container(
+          //   width: size.width,
+          //   height: 10,
+          //   color: AppColors.darkWinterGreen,
+          //   child: Row(
+          //     children: [
+                // Container(
+                //   width: 100,height: 100,color: Colors.red,
+                // )
+          //     ],
+          //   ),
+          // ),
+          Stack(
+            clipBehavior: Clip.none,
+            alignment: AlignmentDirectional.center,
+            children: <Widget>[
+              Container(
+                width: size.width,
+                height: 10,
+                color: AppColors.darkWinterGreen,
+              ),
+              Positioned(
+                left: size.width*0.1,
+                child: ExperienceUnitButton(),
+              ),
+
+
+            ],
+          )
+
+        ],
+      ),
+
+    );
+  }
+}
+class ExperienceUnitButton extends StatefulWidget {
+  const ExperienceUnitButton({ Key? key }) : super(key: key);
+
+  @override
+  _ExperienceUnitButtonState createState() => _ExperienceUnitButtonState();
+}
+
+class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with TickerProviderStateMixin{
+  bool onHover = false;
+
+  late AnimationController controller;
+  late Animation<double> animation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(microseconds: 1000)
+    );
+
+    animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: (){
+        print('fsdfs');
+        controller.forward();
+      },
+      onHover: (onHover){
+        print(onHover);
+        setState(() {
+          this.onHover= onHover;
+        });
+      },
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: AlignmentDirectional.center,
+        children: [
+
+          AnimatedPositioned(
+            duration: Duration(milliseconds: 1000),
+            curve: Curves.bounceIn,
+            top: animation.value * -50,
+            // top: 40,
+            child: Container(width: 40,height: 40, color: Colors.black,)
+          ),
+
+          Container(
+            decoration: const BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.red,
+            ),
+            width: 30, 
+            height: 30,
+          ),
+          Visibility(
+            visible: onHover,
+            child: const Positioned(
+              top: 30,
+              child: Text(
+                'dfssdfsdfsdfsd'
+              )
+            ),
+          ),
+          
+        ],
       ),
     );
   }
 }
+
+
+
+
+
 
 
 class IntroduceScreenBackgroundDecoration2 extends Decoration{
@@ -56,8 +166,8 @@ class _IntroduceScreenBackgroundDecorationBoxPainter extends BoxPainter{
     paint.color = AppColors.cambridgeBlue;
     // Rect rect = Rect.fromCircle(center: offset, radius: 100);
     offset = Offset(configuration.size!.width/2, configuration.size!.height/2);
-    // Rect rect = Rect.fromCenter(center: offset, width: configuration.size!.width/2, height: configuration.size!.height);
-    Rect rect = Rect.fromCenter(center: offset, width: configuration.size!.width/2, height: 200);   
+    Rect rect = Rect.fromCenter(center: offset, width: configuration.size!.width/2, height: configuration.size!.height);
+    // Rect rect = Rect.fromCenter(center: offset, width: configuration.size!.width/2, height: 200);   
     canvas.drawRect(rect, paint);
 
    
