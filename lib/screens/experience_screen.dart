@@ -36,7 +36,9 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
               ),
               Positioned(
                 left: size.width*0.1,
-                child: ExperienceUnitButton(),
+                child: ExperienceUnitButton(
+                  title: 'Blindness',
+                ),
               ),
 
 
@@ -49,8 +51,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
     );
   }
 }
+
 class ExperienceUnitButton extends StatefulWidget {
-  const ExperienceUnitButton({ Key? key }) : super(key: key);
+  final String title;
+  const ExperienceUnitButton({ Key? key, required this.title }) : super(key: key);
 
   @override
   _ExperienceUnitButtonState createState() => _ExperienceUnitButtonState();
@@ -61,7 +65,6 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
 
   late AnimationController controller;
   late Animation<double> animation;
-  late Animation<double> tweenAnimation;
 
   @override
   void initState() {
@@ -73,7 +76,6 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
     );
 
     animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
-
   }
 
   @override
@@ -125,10 +127,15 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
 
           Visibility(
             visible: onHover,
-            child: const Positioned(
-              top: 30,
+            child: Positioned(
+              top: 40,
               child: Text(
-                'dfssdfsdfsdfsd'
+                widget.title,
+                style: const TextStyle(
+                  fontFamily: 'Gothic_A1',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 36
+                ),
               )
             ),
           ),
