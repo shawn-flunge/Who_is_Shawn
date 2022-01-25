@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:who_is_shawn/design_foundation/app_colors.dart';
-import 'package:who_is_shawn/widgets/pop_up_circle_along_line.dart';
+import 'package:who_is_shawn/widgets/custom_painters/pop_up_circle_along_line.dart';
 
 class ExperienceScreen extends StatefulWidget {
   const ExperienceScreen({ Key? key }) : super(key: key);
@@ -112,7 +112,7 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
               animation: animation,
               strokeColor: Colors.black,
               circleColor: Colors.blue,
-              radiusOfCircle: 15
+              radiusOfCircle: 12
             ),
             child: Container(
               decoration: const BoxDecoration(

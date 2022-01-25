@@ -40,6 +40,15 @@ class PopUpCircleAlongLine extends CustomPainter{
     
     canvas.drawLine(centerPoint, destinationPoint, strokePaint);
     canvas.drawCircle(destinationPoint, radiusOfCircle * animation.value, circlePaint);
+
+    Path path = Path();
+    Paint paint = Paint()..color = Colors.white.withOpacity(animation.value) .. strokeWidth = 3..style = PaintingStyle.stroke;
+
+    path.moveTo(destinationPoint.dx - radiusOfCircle/2, destinationPoint.dy + radiusOfCircle/2);
+    path.lineTo(destinationPoint.dx, destinationPoint.dy - radiusOfCircle/3);
+    path.lineTo(destinationPoint.dx + radiusOfCircle/2, destinationPoint.dy + radiusOfCircle/2);
+
+    canvas.drawPath(path, paint);
   }
 
   @override
