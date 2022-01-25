@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:who_is_shawn/src/data/dtos/experience_dto.dart';
 import 'package:who_is_shawn/src/design_foundation/app_colors.dart';
 import 'package:who_is_shawn/src/widgets/custom_painters/pop_up_circle_along_line.dart';
 
@@ -36,12 +37,53 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                 color: AppColors.darkWinterGreen,
               ),
               Positioned(
-                left: size.width*0.1,
+                left: size.width*0.15,
                 child: ExperienceUnitButton(
                   title: 'Blindness',
+                  direction: HeadingDirection.bottomToTop,
+                  experienceDto: ExperienceDto(
+                    title: 'dsfdf',
+                    period: 'dfs',
+                    content: 'sdfsdf'
+                  ),
                 ),
               ),
-
+              Positioned(
+                left: size.width*0.30,
+                child: ExperienceUnitButton(
+                  title: 'Blindness',
+                  direction: HeadingDirection.topToBottom,
+                  experienceDto: ExperienceDto(
+                    title: 'dsfdf',
+                    period: 'dfs',
+                    content: 'sdfsdf'
+                  ),
+                ),
+              ),
+              Positioned(
+                left: size.width*0.60,
+                child: ExperienceUnitButton(
+                  title: 'Blindness',
+                  direction: HeadingDirection.bottomToTop,
+                  experienceDto: ExperienceDto(
+                    title: 'dsfdf',
+                    period: 'dfs',
+                    content: 'sdfsdf'
+                  ),
+                ),
+              ),
+              Positioned(
+                left: size.width*0.80,
+                child: ExperienceUnitButton(
+                  title: 'Blindness',
+                  direction: HeadingDirection.topToBottom,
+                  experienceDto: ExperienceDto(
+                    title: 'dsfdf',
+                    period: 'dfs',
+                    content: 'sdfsdf'
+                  ),
+                ),
+              ),
 
             ],
           )
@@ -55,7 +97,15 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
 
 class ExperienceUnitButton extends StatefulWidget {
   final String title;
-  const ExperienceUnitButton({ Key? key, required this.title }) : super(key: key);
+  final HeadingDirection direction;
+  final ExperienceDto experienceDto;
+
+  const ExperienceUnitButton({ 
+    Key? key, 
+    required this.title,
+    required this.direction,
+    required this.experienceDto
+  }) : super(key: key);
 
   @override
   _ExperienceUnitButtonState createState() => _ExperienceUnitButtonState();
@@ -63,6 +113,8 @@ class ExperienceUnitButton extends StatefulWidget {
 
 class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with TickerProviderStateMixin{
   bool onHover = false;
+  bool isTapped = false;
+  bool isAnimationCompleted = false;
 
   late AnimationController controller;
   late Animation<double> animation;
@@ -76,7 +128,14 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
       duration: const Duration(milliseconds: 1000)
     );
 
-    animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn);
+    animation = CurvedAnimation(parent: controller, curve: Curves.bounceIn)..addStatusListener((status) {
+      if(status == AnimationStatus.completed){
+        isAnimationCompleted = true;
+      } else{
+        isAnimationCompleted = false;
+      }
+      setState(() {});
+    });
   }
 
   @override
@@ -87,11 +146,18 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
 
   @override
   Widget build(BuildContext context) {
+    print(isTapped);
     return InkWell(
       onTap: (){
+        setState(() {
+          isTapped = !isTapped;
+        });
+        
         controller.status == AnimationStatus.dismissed
           ? controller.forward()
           : controller.reverse();
+
+        
       },
       onHover: (onHover){
         setState(() {
@@ -102,9 +168,10 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
         clipBehavior: Clip.none,
         alignment: AlignmentDirectional.center,
         children: [
+
           CustomPaint(
             painter: PopUpCircleAlongLine(
-              direction: HeadingDirection.bottomToTop, 
+              direction: widget.direction, 
               animation: animation,
               strokeColor: Colors.black,
               circleColor: Colors.blue,
@@ -119,12 +186,22 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
               height: 30,
             ),
           ),
+          // AnimatedBuilder(
+          //   animation: animation,
+          //   child: Container(
+          //     width: 100, height: 30, color: Colors.blue,
+          //   ),
+          //   builder: (context, child){
 
-
+          //   }
+          // ),
+          
           Visibility(
             visible: onHover,
             child: Positioned(
-              top: 40,
+              top: widget.direction == HeadingDirection.bottomToTop
+                ? 40
+                : -40,
               child: Text(
                 widget.title,
                 style: const TextStyle(
@@ -135,9 +212,69 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
               )
             ),
           ),
-          
+          Visibility(
+            visible: isAnimationCompleted,
+            child: Positioned(
+              top: widget.direction == HeadingDirection.bottomToTop
+                ? -300
+                : 150,  
+              child: Container(
+                width: 300,
+                height: 180, 
+                color: Colors.red,
+                child: const ExperienceContentWidget(
+                  title: '빌리지 피플 주식회사',
+                  period: '(2021.02 – 2021.08)',
+                  content: '- skill : Flutter/Dart, Bloc, fastlane\n- Flutter 2.0 migration 및 코드 가독성, 기능 개선\n- 딥링크 도입\n- 유저 SNS 페이지 디자인 개편\n- Google map과 Gps를 이용해 산책 트랙킹 기능',
+                ),
+              ),
+            ),
+          ), 
         ],
       ),
+    );
+  }
+}
+
+class ExperienceContentWidget extends StatelessWidget {
+  final String title;
+  final String period;
+  final String content;
+
+  const ExperienceContentWidget({
+    required this.title,
+    required this.period,
+    required this.content,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Text(
+          title,
+          style: const TextStyle(
+            fontFamily: 'Gothic_A1',
+            fontSize: 20,
+            fontWeight: FontWeight.w500
+          ),
+        ),
+        Text(
+          period,
+          style: const TextStyle(
+            fontFamily: 'Gothic_A1',
+            fontSize: 16,
+          ),
+        ),
+        Text(
+          content,
+          style: const TextStyle(
+            fontFamily: 'Gothic_A1',
+          ),
+        )
+      ],
     );
   }
 }
