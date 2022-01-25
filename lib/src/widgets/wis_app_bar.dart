@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:who_is_shawn/widgets/header_text.dart';
+import 'package:who_is_shawn/src/widgets/header_text.dart';
 
 class WisAppBar extends StatefulWidget {
   const WisAppBar({ Key? key }) : super(key: key);

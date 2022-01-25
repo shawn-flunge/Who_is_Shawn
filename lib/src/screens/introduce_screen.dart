@@ -1,12 +1,11 @@
 
 
-import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:who_is_shawn/providers/page_provider.dart';
-import 'package:who_is_shawn/widgets/decorations/introduce_page_background_decoration.dart';
 import 'package:provider/provider.dart';
-import 'package:who_is_shawn/widgets/extracted_text_by_stream.dart';
+import 'package:who_is_shawn/src/providers/page_provider.dart';
+import 'package:who_is_shawn/src/widgets/decorations/introduce_page_background_decoration.dart';
+import 'package:who_is_shawn/src/widgets/extracted_text_by_stream.dart';
+
 
 class IntroduceScreen extends StatefulWidget {
   const IntroduceScreen({ Key? key }) : super(key: key);

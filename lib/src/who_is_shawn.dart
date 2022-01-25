@@ -1,8 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:who_is_shawn/screens/main_screen.dart';
-
+import 'package:who_is_shawn/src/screens/main_screen.dart';
 
 
 

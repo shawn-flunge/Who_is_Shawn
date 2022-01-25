@@ -1,16 +1,12 @@
 
-
-
-import 'dart:io';
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
-import 'package:who_is_shawn/design_foundation/app_colors.dart';
-import 'package:who_is_shawn/providers/page_provider.dart';
+
 import 'package:who_is_shawn/screens/experience_screen.dart';
-import 'package:who_is_shawn/screens/introduce_screen.dart';
-import 'package:who_is_shawn/widgets/wis_app_bar.dart';
+
 import 'package:provider/provider.dart';
+import 'package:who_is_shawn/src/providers/page_provider.dart';
+import 'package:who_is_shawn/src/screens/introduce_screen.dart';
+import 'package:who_is_shawn/src/widgets/wis_app_bar.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

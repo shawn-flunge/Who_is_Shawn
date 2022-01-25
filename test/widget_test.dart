@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:who_is_shawn/main.dart';
-import 'package:who_is_shawn/who_is_shawn.dart';
+import 'package:who_is_shawn/src/who_is_shawn.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {

@@ -1,8 +1,9 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:who_is_shawn/design_foundation/app_colors.dart';
-import 'package:who_is_shawn/widgets/custom_painters/pop_up_circle_along_line.dart';
+import 'package:who_is_shawn/src/design_foundation/app_colors.dart';
+import 'package:who_is_shawn/src/widgets/custom_painters/pop_up_circle_along_line.dart';
+
 
 class ExperienceScreen extends StatefulWidget {
   const ExperienceScreen({ Key? key }) : super(key: key);
@@ -88,14 +89,11 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
   Widget build(BuildContext context) {
     return InkWell(
       onTap: (){
-        // print('fsdfs');
-        
         controller.status == AnimationStatus.dismissed
           ? controller.forward()
           : controller.reverse();
       },
       onHover: (onHover){
-        // print(onHover);
         setState(() {
           this.onHover= onHover;
         });
@@ -104,8 +102,6 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
         clipBehavior: Clip.none,
         alignment: AlignmentDirectional.center,
         children: [
-
-          
           CustomPaint(
             painter: PopUpCircleAlongLine(
               direction: HeadingDirection.bottomToTop, 

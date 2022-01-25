@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:who_is_shawn/providers/page_provider.dart';
+import 'package:who_is_shawn/src/providers/page_provider.dart';
 
 class ExtractedTextByStream extends StatelessWidget {
   ExtractedTextByStream({

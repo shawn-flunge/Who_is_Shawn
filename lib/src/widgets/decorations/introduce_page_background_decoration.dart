@@ -1,7 +1,7 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:who_is_shawn/design_foundation/app_colors.dart';
+import 'package:who_is_shawn/src/design_foundation/app_colors.dart';
 
 class IntroduceScreenBackgroundDecoration extends Decoration{
 
