@@ -34,7 +34,4 @@ class PageProvider with ChangeNotifier, DiagnosticableTreeMixin{
       }
     }
   }
-
-
-
 }

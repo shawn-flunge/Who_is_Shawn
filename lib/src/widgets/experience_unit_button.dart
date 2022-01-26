@@ -6,13 +6,11 @@ import 'package:who_is_shawn/src/widgets/custom_painters/pop_up_circle_along_lin
 import 'package:who_is_shawn/src/widgets/experience_content_widget.dart';
 
 class ExperienceUnitButton extends StatefulWidget {
-  final String title;
   final HeadingDirection direction;
   final ExperienceDto experienceDto;
 
   const ExperienceUnitButton({ 
     Key? key, 
-    required this.title,
     required this.direction,
     required this.experienceDto
   }) : super(key: key);
@@ -61,12 +59,9 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
         setState(() {
           isTapped = !isTapped;
         });
-        
         controller.status == AnimationStatus.dismissed
           ? controller.forward()
           : controller.reverse();
-
-        
       },
       onHover: (onHover){
         setState(() {
@@ -87,36 +82,29 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
               radiusOfCircle: 12
             ),
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Colors.red,
+                color: widget.experienceDto.type == ExperienceType.personal
+                  ? Colors.red
+                  : Colors.blue
               ),
               width: 30, 
               height: 30,
             ),
           ),
-          // AnimatedBuilder(
-          //   animation: animation,
-          //   child: Container(
-          //     width: 100, height: 30, color: Colors.blue,
-          //   ),
-          //   builder: (context, child){
-
-          //   }
-          // ),
           
           Visibility(
             visible: onHover,
             child: Positioned(
               top: widget.direction == HeadingDirection.bottomToTop
                 ? 40
-                : -40,
+                : -45,
               child: Text(
-                widget.title,
+                widget.experienceDto.project,
                 style: const TextStyle(
                   fontFamily: 'Gothic_A1',
                   fontWeight: FontWeight.bold,
-                  fontSize: 36
+                  fontSize: 30
                 ),
               )
             ),
@@ -131,10 +119,10 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
                 width: 300,
                 height: 180, 
                 color: Colors.red,
-                child: const ExperienceContentWidget(
-                  title: '빌리지 피플 주식회사',
-                  period: '(2021.02 – 2021.08)',
-                  content: '- skill : Flutter/Dart, Bloc, fastlane\n- Flutter 2.0 migration 및 코드 가독성, 기능 개선\n- 딥링크 도입\n- 유저 SNS 페이지 디자인 개편\n- Google map과 Gps를 이용해 산책 트랙킹 기능',
+                child: ExperienceContentWidget(
+                  title: widget.experienceDto.title,
+                  period: widget.experienceDto.period,
+                  content: widget.experienceDto.content,
                 ),
               ),
             ),

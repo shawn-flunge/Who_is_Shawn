@@ -41,14 +41,20 @@ class PopUpCircleAlongLine extends CustomPainter{
     canvas.drawLine(centerPoint, destinationPoint, strokePaint);
     canvas.drawCircle(destinationPoint, radiusOfCircle * animation.value, circlePaint);
 
-    Path path = Path();
-    Paint paint = Paint()..color = Colors.white.withOpacity(animation.value) .. strokeWidth = 3..style = PaintingStyle.stroke;
-
-    path.moveTo(destinationPoint.dx - radiusOfCircle/2, destinationPoint.dy + radiusOfCircle/2);
-    path.lineTo(destinationPoint.dx, destinationPoint.dy - radiusOfCircle/3);
-    path.lineTo(destinationPoint.dx + radiusOfCircle/2, destinationPoint.dy + radiusOfCircle/2);
-
-    canvas.drawPath(path, paint);
+    Path arrowPath = Path();
+    Paint arrowPaint = Paint()..color = Colors.white.withOpacity(animation.value) .. strokeWidth = 3..style = PaintingStyle.stroke;
+    
+    if(direction == HeadingDirection.bottomToTop){
+      arrowPath.moveTo(destinationPoint.dx - radiusOfCircle/2, destinationPoint.dy + radiusOfCircle/2);
+      arrowPath.lineTo(destinationPoint.dx, destinationPoint.dy - radiusOfCircle/3);
+      arrowPath.lineTo(destinationPoint.dx + radiusOfCircle/2, destinationPoint.dy + radiusOfCircle/2);
+    } else {
+      arrowPath.moveTo(destinationPoint.dx - radiusOfCircle/2, destinationPoint.dy - radiusOfCircle/2);
+      arrowPath.lineTo(destinationPoint.dx, destinationPoint.dy + radiusOfCircle/3);
+      arrowPath.lineTo(destinationPoint.dx + radiusOfCircle/2, destinationPoint.dy - radiusOfCircle/2);
+    }
+    
+    canvas.drawPath(arrowPath, arrowPaint);
   }
 
   @override
