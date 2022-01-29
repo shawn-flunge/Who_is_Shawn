@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:who_is_shawn/src/design_foundation/app_colors.dart';
 import 'package:who_is_shawn/src/widgets/circle_and_text.dart';
 import 'package:who_is_shawn/src/providers/experience_provider.dart';
 import 'package:who_is_shawn/src/widgets/custom_painters/pop_up_circle_along_line.dart';
@@ -54,15 +55,16 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
             top: 200,
             right: 30,
             child: Column(
-              children: const <Widget>[
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
                 CircleAndText(
-                  circleColor: Colors.green,
-                  text: 'sdfsdfsd',
+                  circleColor: AppColors.pastelBlue,
+                  text: 'Personal',
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 CircleAndText(
-                  circleColor: Colors.green,
-                  text: 'sdfsdfsd',
+                  circleColor: AppColors.pastelRed,
+                  text: 'Work',
                 ),
               ],
             ),

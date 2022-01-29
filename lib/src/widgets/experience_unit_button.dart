@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:who_is_shawn/src/data/dtos/experience_dto.dart';
+import 'package:who_is_shawn/src/design_foundation/app_colors.dart';
 import 'package:who_is_shawn/src/screens/experience_screen.dart';
 import 'package:who_is_shawn/src/widgets/custom_painters/pop_up_circle_along_line.dart';
 import 'package:who_is_shawn/src/widgets/experience_content_widget.dart';
@@ -85,8 +86,8 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: widget.experienceDto.type == ExperienceType.personal
-                  ? Colors.red
-                  : Colors.blue
+                  ? AppColors.pastelBlue
+                  : AppColors.pastelRed
               ),
               width: 30, 
               height: 30,
@@ -113,12 +114,18 @@ class _ExperienceUnitButtonState extends State<ExperienceUnitButton> with Ticker
             visible: isAnimationCompleted,
             child: Positioned(
               top: widget.direction == HeadingDirection.bottomToTop
-                ? -300
+                ? -250
                 : 150,  
               child: Container(
                 width: 300,
-                height: 180, 
-                color: Colors.red,
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 2,
+                    color: AppColors.darkWinterGreen
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10))
+                ),
                 child: ExperienceContentWidget(
                   title: widget.experienceDto.title,
                   period: widget.experienceDto.period,
