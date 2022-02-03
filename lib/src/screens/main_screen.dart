@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:who_is_shawn/src/providers/page_provider.dart';
+import 'package:who_is_shawn/src/screens/contact_screen.dart';
 import 'package:who_is_shawn/src/screens/introduce_screen.dart';
 import 'package:who_is_shawn/src/widgets/wis_app_bar.dart';
 import 'package:who_is_shawn/src/screens/experience_screen.dart';
@@ -24,11 +25,12 @@ class _MainScreenState extends State<MainScreen> {
   int offsetWantToGo = 0;
 
   List<Widget> screens = [
+    const ContactScreen(),
     const ExperienceScreen(),
     const IntroduceScreen(),
     
     const IntroduceScreen(),
-    const ExperienceScreen()
+    
   ];
 
 
